@@ -3,14 +3,15 @@ using Core.Enums;
 
 namespace Core.Entities
 {
-    public class Campaign(Guid templateId, CampaignCondition condition, DateTime sendTime, int priority) : BaseEntity<Guid>
+    public class Campaign(Guid templateId, CampaignCondition condition, DateTime sendTime, int priority, Guid id = default, CampaignTemplate template = null, ICollection<ScheduledCampaign> scheduledCampaigns = null) 
+        : BaseEntity<Guid>(id)
     {
         public Guid TemplateId { get; private set; } = templateId;
         public CampaignCondition Condition { get; private set; } = condition;
         public DateTime SendTime { get; private set; } = sendTime;
         public int Priority { get; private set; } = priority;
-        public CampaignTemplate Template { get; private set; }
-        public ICollection<ScheduledCampaign> ScheduledCampaigns { get; private set; }
+        public CampaignTemplate Template { get; private set; } = template;
+        public ICollection<ScheduledCampaign> ScheduledCampaigns { get; private set; } = scheduledCampaigns;
 
         public bool DoesCustomerMatchCondition(Customer customer) =>
             Condition switch
