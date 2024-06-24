@@ -6,7 +6,7 @@ using Quartz;
 
 namespace Infrastructure.Services
 {
-    internal class CampaignSchedulerService(
+    public class CampaignSchedulerService(
         ICampaignRepository campaignRepository,
         IScheduledCampaignRepository scheduledCampaignRepository,
         ISchedulerFactory schedulerFactory,

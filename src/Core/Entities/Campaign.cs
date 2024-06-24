@@ -3,7 +3,7 @@ using Core.Enums;
 
 namespace Core.Entities
 {
-    public class Campaign(Guid templateId, CampaignCondition condition, DateTime sendTime, int priority, Guid id = default, CampaignTemplate template = null, ICollection<ScheduledCampaign> scheduledCampaigns = null) 
+    public class Campaign(CampaignCondition condition, DateTime sendTime, int priority, Guid id = default, Guid templateId = default, CampaignTemplate template = null, ICollection<ScheduledCampaign> scheduledCampaigns = null) 
         : BaseEntity<Guid>(id)
     {
         public Guid TemplateId { get; private set; } = templateId;

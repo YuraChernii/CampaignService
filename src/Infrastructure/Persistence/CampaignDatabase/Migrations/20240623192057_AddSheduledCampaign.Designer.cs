@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Infrastructure.Migrations
+namespace Infrastructure.Persistence.CampaignDatabase.Migrations
 {
     [DbContext(typeof(CampaignContext))]
     [Migration("20240623192057_AddSheduledCampaign")]

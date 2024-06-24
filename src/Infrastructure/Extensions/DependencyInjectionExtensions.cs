@@ -35,6 +35,7 @@ namespace Infrastructure.Extensions
         {
             services.AddScoped<ICampaignSchedulerService, CampaignSchedulerService>();
             services.AddScoped<ITransactionService, TransactionService>();
+            services.AddScoped<ICampaignSenderService, CampaignSenderService>();
             services.AddQuartzServices();
 
             return services;

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace Infrastructure.Migrations
+namespace Infrastructure.Persistence.CampaignDatabase.Migrations
 {
     /// <inheritdoc />
     public partial class Initialization : Migration

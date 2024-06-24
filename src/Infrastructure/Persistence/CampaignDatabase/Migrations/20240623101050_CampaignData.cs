@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Infrastructure.Migrations
+namespace Infrastructure.Persistence.CampaignDatabase.Migrations
 {
     public partial class CampaignData : Migration
     {

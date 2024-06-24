@@ -1,5 +1,6 @@
 ﻿using Application.Commands.CreateCampaign;
 using Application.Commands.ScheduleCampaign;
+using Application.Services;
 using Core.Entities;
 using Core.Repositories;
 using MediatR;
@@ -12,7 +13,8 @@ namespace Infrastructure.Jobs
         IScheduledCampaignRepository scheduledCampaignRepository,
         ICustomerRepository customerRepository,
         IServiceScopeFactory serviceScopeFactory,
-        IMediator mediator)
+        IMediator mediator,
+        ICampaignSenderService campaignSenderService)
         : IJob
     {
         private static readonly object fileLock = new();
@@ -66,25 +68,7 @@ namespace Infrastructure.Jobs
             ICustomerRepository repository = scope.ServiceProvider.GetRequiredService<ICustomerRepository>();
 
             await repository.UpdateLastCampaignSentTime(customer.Id, sendTime);
-            await SendCampaignToCustomerAsync(campaign, customer, sendTime);
-        }
-
-        private async Task SendCampaignToCustomerAsync(Campaign campaign, Customer customer, DateTime sendTime)
-        {
-            string directory = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "CampaignSends");
-            Directory.CreateDirectory(directory);
-            string fileName = Path.Combine(directory, $"sends_{sendTime:yyyyMMdd}.txt");
-
-            lock (fileLock)
-            {
-                using StreamWriter writer = new(fileName, true);
-                writer.WriteLine($"Send Campaign to Customer{customer.Id}:");
-                writer.WriteLine($"Date: {sendTime}");
-                writer.WriteLine($"Campaign Template: {campaign.Template}");
-                writer.WriteLine($"Priority: {campaign.Priority}");
-            }
-
-            await Task.Delay(1800_000);
+            await campaignSenderService.SendCampaignToCustomerAsync(campaign, customer, sendTime);
         }
     }
 }

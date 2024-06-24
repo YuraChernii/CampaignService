@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Infrastructure.Migrations
+namespace Infrastructure.Persistence.CampaignDatabase.Migrations
 {
     [DbContext(typeof(CampaignContext))]
-    [Migration("20240623101050_CampaignData")]
-    partial class CampaignData
+    [Migration("20240623101034_Initialization")]
+    partial class Initialization
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -4,19 +4,16 @@ using Infrastructure.Persistence.CampaignDatabase;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
 
-namespace Infrastructure.Migrations
+namespace Infrastructure.Persistence.CampaignDatabase.Migrations
 {
     [DbContext(typeof(CampaignContext))]
-    [Migration("20240623144357_CustomerData")]
-    partial class CustomerData
+    partial class CampaignContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -95,9 +92,28 @@ namespace Infrastructure.Migrations
                     b.Property<bool>("IsNewCustomer")
                         .HasColumnType("bit");
 
+                    b.Property<DateTime>("LastCampaignSentTime")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.ToTable("Customers", (string)null);
+                });
+
+            modelBuilder.Entity("Core.Entities.ScheduledCampaign", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CampaignId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CampaignId");
+
+                    b.ToTable("ScheduledCampaigns", (string)null);
                 });
 
             modelBuilder.Entity("Core.Entities.Campaign", b =>
@@ -109,6 +125,22 @@ namespace Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Template");
+                });
+
+            modelBuilder.Entity("Core.Entities.ScheduledCampaign", b =>
+                {
+                    b.HasOne("Core.Entities.Campaign", "Campaign")
+                        .WithMany("ScheduledCampaigns")
+                        .HasForeignKey("CampaignId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Campaign");
+                });
+
+            modelBuilder.Entity("Core.Entities.Campaign", b =>
+                {
+                    b.Navigation("ScheduledCampaigns");
                 });
 
             modelBuilder.Entity("Core.Entities.CampaignTemplate", b =>
