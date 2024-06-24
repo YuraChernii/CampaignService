@@ -1,5 +1,6 @@
 ﻿using Application.Commands.CreateCampaign;
 using Application.Commands.ScheduleCampaign;
+using Application.Exceptions;
 using Application.Services;
 using Core.Entities;
 using Core.Repositories;
@@ -23,7 +24,8 @@ namespace Infrastructure.Jobs
         {
             Guid scheduledCampaignId = Guid.Parse(context.JobDetail.Key.Name);
 
-            ScheduledCampaign scheduledCampaign = await scheduledCampaignRepository.GetScheduledCampaign(scheduledCampaignId, true) ?? throw new NotImplementedException();
+            ScheduledCampaign scheduledCampaign = await scheduledCampaignRepository.GetScheduledCampaign(scheduledCampaignId, true) 
+                ?? throw new ScheduledCampaignNotFoundException(scheduledCampaignId);
             DateTime sendTime = scheduledCampaign.Campaign.SendTime;
             IEnumerable<ScheduledCampaign> scheduledCampaignsWithHigherPriority = await scheduledCampaignRepository.GetWithHigherPriority(scheduledCampaign.Campaign.Priority, sendTime);
 

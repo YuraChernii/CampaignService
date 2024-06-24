@@ -2,9 +2,9 @@
 
 namespace Core.Entities.Base
 {
-    public abstract class BaseEntity<T>(T id = default)
+    public abstract class BaseEntity<T>
     {
-        public T Id { get; set; } = id;
+        public T Id { get; set; }
         public List<INotification> DomainEvents { get; } = [];
     }
 }

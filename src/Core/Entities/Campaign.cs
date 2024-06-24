@@ -3,15 +3,27 @@ using Core.Enums;
 
 namespace Core.Entities
 {
-    public class Campaign(CampaignCondition condition, DateTime sendTime, int priority, Guid id = default, Guid templateId = default, CampaignTemplate template = null, ICollection<ScheduledCampaign> scheduledCampaigns = null) 
-        : BaseEntity<Guid>(id)
+    public class Campaign : BaseEntity<Guid>
     {
-        public Guid TemplateId { get; private set; } = templateId;
-        public CampaignCondition Condition { get; private set; } = condition;
-        public DateTime SendTime { get; private set; } = sendTime;
-        public int Priority { get; private set; } = priority;
-        public CampaignTemplate Template { get; private set; } = template;
-        public ICollection<ScheduledCampaign> ScheduledCampaigns { get; private set; } = scheduledCampaigns;
+        private Campaign() { }
+
+        public Campaign(CampaignCondition condition, DateTime sendTime, int priority, Guid id = default, Guid templateId = default, CampaignTemplate template = null, ICollection<ScheduledCampaign> scheduledCampaigns = null)
+        {
+            Id = id;
+            Condition = condition;
+            SendTime = sendTime;
+            Priority = priority;
+            TemplateId = templateId;
+            Template = template;
+            ScheduledCampaigns = scheduledCampaigns;
+        }
+
+        public Guid TemplateId { get; private set; }
+        public CampaignCondition Condition { get; private set; }
+        public DateTime SendTime { get; private set; }
+        public int Priority { get; private set; }
+        public CampaignTemplate Template { get; private set; }
+        public ICollection<ScheduledCampaign> ScheduledCampaigns { get; private set; }
 
         public bool DoesCustomerMatchCondition(Customer customer) =>
             Condition switch

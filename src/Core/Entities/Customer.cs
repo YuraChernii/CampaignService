@@ -3,14 +3,26 @@ using Core.Enums;
 
 namespace Core.Entities
 {
-    public class Customer(Gender gender, int age, string city, decimal deposit, bool isNewCustomer, int id = default, DateTime lastCampaignSentTime = default) 
-        : BaseEntity<int>(id)
+    public class Customer : BaseEntity<int>
     {
-        public Gender Gender { get; private set; } = gender;
-        public int Age { get; private set; } = age;
-        public string City { get; private set; } = city;
-        public decimal Deposit { get; private set; } = deposit;
-        public bool IsNewCustomer { get; private set; } = isNewCustomer;
-        public DateTime LastCampaignSentTime { get; private set; } = lastCampaignSentTime;
+        private Customer() { }
+
+        public Customer(Gender gender, int age, string city, decimal deposit, bool isNewCustomer, int id = default, DateTime lastCampaignSentTime = default)
+        {
+            Id = id;
+            Gender = gender;
+            Age = age;
+            City = city;
+            Deposit = deposit;
+            IsNewCustomer = isNewCustomer;
+            LastCampaignSentTime = lastCampaignSentTime;
+        }
+
+        public Gender Gender { get; private set; }
+        public int Age { get; private set; }
+        public string City { get; private set; }
+        public decimal Deposit { get; private set; }
+        public bool IsNewCustomer { get; private set; }
+        public DateTime LastCampaignSentTime { get; private set; }
     }
 }

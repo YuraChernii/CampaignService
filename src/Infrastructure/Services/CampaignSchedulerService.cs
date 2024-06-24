@@ -1,5 +1,7 @@
-﻿using Application.Services;
+﻿using Application.Exceptions;
+using Application.Services;
 using Core.Entities;
+using Core.Exceptions;
 using Core.Repositories;
 using Infrastructure.Jobs;
 using Quartz;
@@ -15,11 +17,11 @@ namespace Infrastructure.Services
     {
         public async Task ScheduleCampaignAsync(ScheduleCampaignParameters parameters)
         {
-            Campaign campaign = await campaignRepository.GetCampaign(parameters.CampaignId) ?? throw new NotImplementedException();
+            Campaign campaign = await campaignRepository.GetCampaign(parameters.CampaignId) ?? throw new CampaignNotFoundException(parameters.CampaignId);
             
             await transactionService.ExecuteAsync(async () =>
             {
-                Guid scheduledCampaignId = await scheduledCampaignRepository.CreateScheduledCampaign(new(campaign.Id));
+                Guid scheduledCampaignId = await scheduledCampaignRepository.CreateScheduledCampaign(new(campaignId: campaign.Id));
 
                 IScheduler scheduler = await schedulerFactory.GetScheduler();
                 IJobDetail job = CreateJob(scheduledCampaignId.ToString());
@@ -37,7 +39,7 @@ namespace Infrastructure.Services
         {
             if (campaign.SendTime < DateTime.UtcNow)
             {
-                throw new NotImplementedException();
+                throw new InvalidSendTimeException();
             }
 
             return TriggerBuilder.Create()

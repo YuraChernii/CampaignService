@@ -1,6 +1,8 @@
-﻿using Application.Services;
+﻿using Application.Exceptions;
+using Application.Services;
 using Core.Entities;
 using Core.Enums;
+using Core.Exceptions;
 using Core.Repositories;
 using Infrastructure.Services;
 using Moq;
@@ -46,17 +48,17 @@ namespace Campaigns
         }
 
         [Fact]
-        public async Task ScheduleCampaignAsync_InvalidCampaign_ThrowsNotImplementedException()
+        public async Task ScheduleCampaignAsync_InvalidCampaign_ThrowsCampaignNotFoundException()
         {
             Guid campaignId = Guid.NewGuid();
             ScheduleCampaignParameters scheduleCampaignParameters = new() { CampaignId = campaignId };
             _mockCampaignRepository.Setup(r => r.GetCampaign(campaignId)).ReturnsAsync((Campaign)null);
 
-            await Assert.ThrowsAsync<NotImplementedException>(() => _campaignSchedulerService.ScheduleCampaignAsync(scheduleCampaignParameters));
+            await Assert.ThrowsAsync<CampaignNotFoundException>(() => _campaignSchedulerService.ScheduleCampaignAsync(scheduleCampaignParameters));
         }
 
         [Fact]
-        public async Task ScheduleCampaignAsync_CampaignWithPastSendTime_ThrowsNotImplementedException()
+        public async Task ScheduleCampaignAsync_CampaignWithPastSendTime_ThrowsInvalidSendTimeException()
         {
             Guid campaignId = Guid.NewGuid();
             Campaign campaign = new(CampaignCondition.AgeAbove45, DateTime.UtcNow.AddHours(-1), 1);
@@ -64,7 +66,7 @@ namespace Campaigns
             _mockCampaignRepository.Setup(r => r.GetCampaign(campaignId)).ReturnsAsync(campaign);
             _mockTransactionService.Setup(t => t.ExecuteAsync(It.IsAny<Func<Task>>())).Returns<Func<Task>>(func => func());
 
-            await Assert.ThrowsAsync<NotImplementedException>(() => _campaignSchedulerService.ScheduleCampaignAsync(scheduleCampaignParameters));
+            await Assert.ThrowsAsync<InvalidSendTimeException>(() => _campaignSchedulerService.ScheduleCampaignAsync(scheduleCampaignParameters));
         }
     }
 }

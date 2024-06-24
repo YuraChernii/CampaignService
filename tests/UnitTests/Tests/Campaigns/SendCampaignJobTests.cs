@@ -1,5 +1,6 @@
 using Application.Commands.CreateCampaign;
 using Application.Commands.ScheduleCampaign;
+using Application.Exceptions;
 using Application.Services;
 using Core.Entities;
 using Core.Enums;
@@ -57,14 +58,14 @@ namespace Campaigns
         }
 
         [Fact]
-        public async Task Execute_NullScheduledCampaign_ThrowsNotImplementedException()
+        public async Task Execute_NullScheduledCampaign_ThrowsScheduledCampaignNotFoundException()
         {
             Guid scheduledCampaignId = Guid.NewGuid();
             _mockScheduledCampaignRepository.Setup(r => r.GetScheduledCampaign(scheduledCampaignId, true))
                                             .ReturnsAsync((ScheduledCampaign)null);
             IJobExecutionContext jobExecutionContext = GetJobExecutionContext(scheduledCampaignId);
 
-            await Assert.ThrowsAsync<NotImplementedException>(() => _sendCampaignJob.Execute(jobExecutionContext));
+            await Assert.ThrowsAsync<ScheduledCampaignNotFoundException>(() => _sendCampaignJob.Execute(jobExecutionContext));
         }
 
         [Fact]
