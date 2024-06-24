@@ -4,12 +4,13 @@ using Application.Services;
 using Core.Entities;
 using Core.Enums;
 using Core.Repositories;
+using Infrastructure.Jobs;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Quartz;
 
-namespace Infrastructure.Jobs.Tests
+namespace Campaigns
 {
     public class SendCampaignJobTests
     {

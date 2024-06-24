@@ -8,7 +8,6 @@ using Quartz;
 
 namespace Campaigns
 {
-
     public class CampaignSchedulerServiceTests
     {
         private readonly Mock<ICampaignRepository> _mockCampaignRepository = new();
