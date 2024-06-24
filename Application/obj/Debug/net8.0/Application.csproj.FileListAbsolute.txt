@@ -1,0 +1,15 @@
+D:\repo\NewWork\TestProjects\CampaignService\Application\bin\Debug\net8.0\Application.deps.json
+D:\repo\NewWork\TestProjects\CampaignService\Application\bin\Debug\net8.0\Application.dll
+D:\repo\NewWork\TestProjects\CampaignService\Application\bin\Debug\net8.0\Application.pdb
+D:\repo\NewWork\TestProjects\CampaignService\Application\bin\Debug\net8.0\Core.dll
+D:\repo\NewWork\TestProjects\CampaignService\Application\bin\Debug\net8.0\Core.pdb
+D:\repo\NewWork\TestProjects\CampaignService\Application\obj\Debug\net8.0\Application.csproj.AssemblyReference.cache
+D:\repo\NewWork\TestProjects\CampaignService\Application\obj\Debug\net8.0\Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\repo\NewWork\TestProjects\CampaignService\Application\obj\Debug\net8.0\Application.AssemblyInfoInputs.cache
+D:\repo\NewWork\TestProjects\CampaignService\Application\obj\Debug\net8.0\Application.AssemblyInfo.cs
+D:\repo\NewWork\TestProjects\CampaignService\Application\obj\Debug\net8.0\Application.csproj.CoreCompileInputs.cache
+D:\repo\NewWork\TestProjects\CampaignService\Application\obj\Debug\net8.0\Application.csproj.CopyComplete
+D:\repo\NewWork\TestProjects\CampaignService\Application\obj\Debug\net8.0\Application.dll
+D:\repo\NewWork\TestProjects\CampaignService\Application\obj\Debug\net8.0\refint\Application.dll
+D:\repo\NewWork\TestProjects\CampaignService\Application\obj\Debug\net8.0\Application.pdb
+D:\repo\NewWork\TestProjects\CampaignService\Application\obj\Debug\net8.0\ref\Application.dll
